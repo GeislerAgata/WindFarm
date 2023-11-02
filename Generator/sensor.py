@@ -11,9 +11,12 @@ faker.add_provider(date_time)
 
 
 class Sensor:
-    def __init__(self, sensor_id, sensor_type, host):
+    def __init__(self, sensor_id, sensor_type, sensor_min_range, sensor_max_range, sensor_frequency, host):
         self.sensor_id = sensor_id
         self.sensor_type = sensor_type
+        self.min_range = sensor_min_range
+        self.max_range = sensor_max_range
+        self.frequency = sensor_frequency
         self.host = host
         self.unit = ""
 
@@ -27,25 +30,28 @@ class Sensor:
         self.millimeters = "mm"
         self.decibels = "cB"
 
-    def random_data(self, value_range) -> float:
+    def random_data_range(self, value_range) -> float:
         min_range, max_range = value_range
         return random.uniform(min_range, max_range)
+
+    def random_data(self) -> float:
+        return random.uniform(self.min_range, self.max_range)
 
     def generate_random_measurement(self) -> float:
 
         value = 0.0
         match self.sensor_type:
             case "wind_speed":
-                value = self.random_data(self.wind_speed_range)
+                value = self.random_data()
                 self.unit = self.meters_per_second
             case "temperature":
-                value = self.random_data(self.temperature_range)
+                value = self.random_data()
                 self.unit = self.celsius
             case "vibrations":
-                value = self.random_data(self.vibrations_range)
+                value = self.random_data()
                 self.unit = self.millimeters
             case "noise":
-                value = self.random_data(self.noise_range)
+                value = self.random_data()
                 self.unit = self.decibels
             case _:
                 print("Error: Undefined sensor type")
