@@ -1,0 +1,68 @@
+{
+  "Sensors": [
+    {
+      "sensor_id": 1,
+      "sensor_type": "wind_speed"
+    },
+    {
+      "sensor_id": 2,
+      "sensor_type": "wind_speed"
+    },
+    {
+      "sensor_id": 3,
+      "sensor_type": "wind_speed"
+    },
+    {
+      "sensor_id": 4,
+      "sensor_type": "wind_speed"
+    },
+    {
+      "sensor_id": 5,
+      "sensor_type": "temperature"
+    },
+    {
+      "sensor_id": 6,
+      "sensor_type": "temperature"
+    },
+    {
+      "sensor_id": 7,
+      "sensor_type": "temperature"
+    },
+    {
+      "sensor_id": 8,
+      "sensor_type": "temperature"
+    },
+    {
+      "sensor_id": 9,
+      "sensor_type": "vibrations"
+    },
+    {
+      "sensor_id": 10,
+      "sensor_type": "vibrations"
+    },
+    {
+      "sensor_id": 11,
+      "sensor_type": "vibrations"
+    },
+    {
+      "sensor_id": 12,
+      "sensor_type": "vibrations"
+    },
+    {
+      "sensor_id": 13,
+      "sensor_type": "noise"
+    },
+    {
+      "sensor_id": 14,
+      "sensor_type": "noise"
+    },
+    {
+      "sensor_id": 15,
+      "sensor_type": "noise"
+    },
+    {
+      "sensor_id": 16,
+      "sensor_type": "noise"
+    }
+  ]
+}
