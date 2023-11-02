@@ -8,17 +8,17 @@ def rabbitmq_connection_open(sensor_type: str) -> (pika.BlockingConnection, Bloc
     channel = connection.channel()
     queue_id = sensor_type
     channel.queue_declare(queue=queue_id, durable=True)
-    return connection, queue_id, channel
+    return connection, channel, queue_id
 
 
 def rabbitmq_connection_close(connection: pika.BlockingConnection):
     connection.close()
 
 
-def rabbitmq_message_send(msg, queue_id, channel):
+def rabbitmq_message_send(msg, channel, queue_id):
     channel.basic_publish(
         exchange='',
-        routing_key='queue_id',
+        routing_key=queue_id,
         body=msg,
         properties=pika.BasicProperties(
             delivery_mode=2,
