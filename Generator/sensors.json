@@ -1,0 +1,116 @@
+{
+  "Sensors": [
+    {
+      "sensor_id": 1,
+      "sensor_type": "wind_speed",
+      "min_range": 3.0,
+      "max_range": 25.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 2,
+      "sensor_type": "wind_speed",
+      "min_range": 3.0,
+      "max_range": 25.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 3,
+      "sensor_type": "wind_speed",
+      "min_range": 3.0,
+      "max_range": 25.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 4,
+      "sensor_type": "wind_speed",
+      "min_range": 3.0,
+      "max_range": 25.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 5,
+      "sensor_type": "temperature",
+      "min_range": -40.0,
+      "max_range": 50.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 6,
+      "sensor_type": "temperature",
+      "min_range": -40.0,
+      "max_range": 50.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 7,
+      "sensor_type": "temperature",
+      "min_range": -40.0,
+      "max_range": 50.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 8,
+      "sensor_type": "temperature",
+      "min_range": -40.0,
+      "max_range": 50.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 9,
+      "sensor_type": "vibrations",
+      "min_range": 0.1,
+      "max_range": 10.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 10,
+      "sensor_type": "vibrations",
+      "min_range": 0.1,
+      "max_range": 10.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 11,
+      "sensor_type": "vibrations",
+      "min_range": 0.1,
+      "max_range": 10.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 12,
+      "sensor_type": "vibrations",
+      "min_range": 0.1,
+      "max_range": 10.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 13,
+      "sensor_type": "noise",
+      "min_range": 20.0,
+      "max_range": 120.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 14,
+      "sensor_type": "noise",
+      "min_range": 20.0,
+      "max_range": 120.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 15,
+      "sensor_type": "noise",
+      "min_range": 20.0,
+      "max_range": 120.0,
+      "frequency_per_minute": 20
+    },
+    {
+      "sensor_id": 16,
+      "sensor_type": "noise",
+      "min_range": 20.0,
+      "max_range": 120.0,
+      "frequency_per_minute": 20
+    }
+  ]
+}
