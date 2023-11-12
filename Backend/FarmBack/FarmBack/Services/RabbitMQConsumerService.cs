@@ -1,6 +1,8 @@
 ﻿using RabbitMQ.Client.Events;
 using RabbitMQ.Client;
 using System.Text;
+using FarmBack.DTO;
+using Newtonsoft.Json;
 
 namespace FarmBack.Services
 {
@@ -9,16 +11,19 @@ namespace FarmBack.Services
         private readonly IConnection _connection;
         private readonly IModel _channel;
         private readonly string filePath = "messages.txt";
+        private readonly SensorDataRepository _sensorDataRepository;
 
         public RabbitMQConsumerService()
         {
             var factory = new ConnectionFactory
             {
-                HostName = "localhost", // Podaj adres RabbitMQ
-                Port = 5672,            // Port RabbitMQ
+                HostName = "localhost",
+                Port = 5672,
                 UserName = "guest",
                 Password = "guest"
             };
+            
+            _sensorDataRepository = new SensorDataRepository("mongodb://localhost:27017", "windfarm", "windfarm");
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();
@@ -34,24 +39,22 @@ namespace FarmBack.Services
                 "noise"
             };
 
-            //while (!stoppingToken.IsCancellationRequested)
-            //{
-                foreach (var queue in queues)
+            foreach (var queue in queues)
+            {
+                var consumer = new EventingBasicConsumer(_channel);
+                consumer.Received += (model, ea) =>
                 {
-                    var consumer = new EventingBasicConsumer(_channel);
-                    consumer.Received += (model, ea) =>
-                    {
-                        var body = ea.Body.ToArray();
-                        var message = Encoding.UTF8.GetString(body);
-                        System.Diagnostics.Debug.WriteLine($"Received message from queue '{queue}': {message}"); 
-                        //Console.WriteLine($"Received message from queue '{queue}': {message}");
+                    var body = ea.Body.ToArray();
+                    var message = Encoding.UTF8.GetString(body);
+                    
+                    var sensorData = JsonConvert.DeserializeObject<SensorData>(message);
+                    _sensorDataRepository.InsertSensorData(sensorData);
 
-                        File.AppendAllText(filePath, $"Queue: {queue}, Message: {message}\n");
-                    };
+                    //File.AppendAllText(filePath, $"Queue: {queue}, Message: {message}\n");
+                };
 
-                    _channel.BasicConsume(queue: queue, autoAck: true, consumer: consumer);
-                }
-            //}
+                _channel.BasicConsume(queue: queue, autoAck: true, consumer: consumer);
+            }
 
             while (!stoppingToken.IsCancellationRequested)
             {
