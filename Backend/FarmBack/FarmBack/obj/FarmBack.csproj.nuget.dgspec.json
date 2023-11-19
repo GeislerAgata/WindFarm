@@ -1,30 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\maryk\\IdeaProjects\\WindFarm\\Backend\\FarmBack\\FarmBack\\FarmBack.csproj": {}
+    "E:\\Studia\\SI.NET\\WindFarm-main\\Backend\\FarmBack\\Backend\\FarmBack\\FarmBack\\FarmBack.csproj": {}
   },
   "projects": {
-    "C:\\Users\\maryk\\IdeaProjects\\WindFarm\\Backend\\FarmBack\\FarmBack\\FarmBack.csproj": {
+    "E:\\Studia\\SI.NET\\WindFarm-main\\Backend\\FarmBack\\Backend\\FarmBack\\FarmBack\\FarmBack.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maryk\\IdeaProjects\\WindFarm\\Backend\\FarmBack\\FarmBack\\FarmBack.csproj",
+        "projectUniqueName": "E:\\Studia\\SI.NET\\WindFarm-main\\Backend\\FarmBack\\Backend\\FarmBack\\FarmBack\\FarmBack.csproj",
         "projectName": "FarmBack",
-        "projectPath": "C:\\Users\\maryk\\IdeaProjects\\WindFarm\\Backend\\FarmBack\\FarmBack\\FarmBack.csproj",
-        "packagesPath": "C:\\Users\\maryk\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maryk\\IdeaProjects\\WindFarm\\Backend\\FarmBack\\FarmBack\\obj\\",
+        "projectPath": "E:\\Studia\\SI.NET\\WindFarm-main\\Backend\\FarmBack\\Backend\\FarmBack\\FarmBack\\FarmBack.csproj",
+        "packagesPath": "C:\\Users\\Agata Geisler\\.nuget\\packages\\",
+        "outputPath": "E:\\Studia\\SI.NET\\WindFarm-main\\Backend\\FarmBack\\Backend\\FarmBack\\FarmBack\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
-        ],
         "configFilePaths": [
-          "C:\\Users\\maryk\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\Agata Geisler\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -63,6 +58,10 @@
               "target": "Package",
               "version": "[7.0.13, )"
             },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.22.0, )"
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
@@ -95,7 +94,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }

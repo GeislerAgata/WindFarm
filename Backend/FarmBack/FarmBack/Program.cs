@@ -2,6 +2,7 @@ using FarmBack.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//builder.Services.AddSingleton<ISensorDataRepository, SensorDataRepository>();
 builder.Services.AddControllers();
 builder.Services.AddHostedService<RabbitMQConsumerService>();
 builder.Services.AddEndpointsApiExplorer();
