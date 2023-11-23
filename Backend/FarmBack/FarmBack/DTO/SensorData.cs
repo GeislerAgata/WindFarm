@@ -1,7 +1,9 @@
+using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 
 namespace FarmBack.DTO;
 
+[BsonIgnoreExtraElements]
 public class SensorData
 {
     [JsonProperty("timestamp")]

@@ -3,7 +3,7 @@ using MongoDB.Driver;
 
 namespace FarmBack.Services;
 
-public class SensorDataRepository
+public class SensorDataRepository : ISensorDataRepository
 {
     private readonly IMongoCollection<SensorData> _sensorDataCollection;
 
