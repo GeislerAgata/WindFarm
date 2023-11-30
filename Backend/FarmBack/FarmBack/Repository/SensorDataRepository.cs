@@ -2,26 +2,135 @@ using FarmBack.DTO;
 using MongoDB.Driver;
 
 namespace FarmBack.Services;
-
-public class SensorDataRepository : ISensorDataRepository
-{
-    private readonly IMongoCollection<SensorData> _sensorDataCollection;
-
-    public SensorDataRepository(string connectionString, string databaseName, string collectionName)
+    public class SensorDataRepository : ISensorDataRepository
     {
-        var client = new MongoClient(connectionString);
-        var database = client.GetDatabase(databaseName);
-        _sensorDataCollection = database.GetCollection<SensorData>(collectionName);
-    }
+        private readonly IMongoCollection<SensorData> _sensorDataCollection;
 
-    public void InsertSensorData(SensorData sensorData)
-    {
-        _sensorDataCollection.InsertOne(sensorData);
-    }
+        public SensorDataRepository(string connectionString, string databaseName, string collectionName)
+        {
+            var client = new MongoClient(connectionString);
+            var database = client.GetDatabase(databaseName);
+            _sensorDataCollection = database.GetCollection<SensorData>(collectionName);
+        }
+        
+        public List<SensorData> GetSortedSensorData(string sortBy, bool ascending) // true - ascending, false - Descending
+        {
+            SortDefinition<SensorData> sortDefinition = null;
 
-    public List<SensorData> GetSensorData(int sensorId)
-    {
-        var filter = Builders<SensorData>.Filter.Eq(x => x.SensorId, sensorId);
-        return _sensorDataCollection.Find(filter).ToList();
+            switch (sortBy)
+            {
+                case "timestamp":
+                    sortDefinition = ascending
+                        ? Builders<SensorData>.Sort.Ascending(data => data.Timestamp)
+                        : Builders<SensorData>.Sort.Descending(data => data.Timestamp);
+                    break;
+                case "sensor_id":
+                    sortDefinition = ascending
+                        ? Builders<SensorData>.Sort.Ascending(data => data.SensorId)
+                        : Builders<SensorData>.Sort.Descending(data => data.SensorId);
+                    break;
+                case "sensor_type":
+                    sortDefinition = ascending
+                        ? Builders<SensorData>.Sort.Ascending(data => data.SensorType)
+                        : Builders<SensorData>.Sort.Descending(data => data.SensorType);
+                    break;
+                case "value":
+                    sortDefinition = ascending
+                        ? Builders<SensorData>.Sort.Ascending(data => data.Value)
+                        : Builders<SensorData>.Sort.Descending(data => data.Value);
+                    break;
+                case "unit":
+                    sortDefinition = ascending
+                        ? Builders<SensorData>.Sort.Ascending(data => data.Unit)
+                        : Builders<SensorData>.Sort.Descending(data => data.Unit);
+                    break;
+                default:
+                    sortDefinition = ascending
+                        ? Builders<SensorData>.Sort.Ascending(data => data.Value)
+                        : Builders<SensorData>.Sort.Descending(data => data.Value);
+                    break;
+            }
+
+            var sortedData = _sensorDataCollection.Find(Builders<SensorData>.Filter.Empty)
+                .Sort(sortDefinition)
+                .ToList();
+
+            return sortedData;
+        }
+
+        public void InsertSensorData(SensorData sensorData)
+        {
+            _sensorDataCollection.InsertOne(sensorData);
+        }
+        public List<SensorData> GetSensorsData()
+        {
+            var filter = Builders<SensorData>.Filter.Exists(x => x.SensorId);
+            return _sensorDataCollection.Find(filter).ToList();
+        }
+        
+        public List<SensorData> GetSensorData(int sensorId)
+        {
+            var filter = Builders<SensorData>.Filter.Eq(x => x.SensorId, sensorId);
+            return _sensorDataCollection.Find(filter).ToList();
+        }
+
+        public List<SensorData> GetSensorsDataByTimestamp(DateTime timestamp)
+        {
+            var filter = Builders<SensorData>.Filter.Eq(x => x.Timestamp, timestamp);
+            return _sensorDataCollection.Find(filter).ToList();
+        }
+        
+        public List<SensorData> GetSensorsDataByHour(string timeString)
+        {
+            if (TimeSpan.TryParse(timeString, out TimeSpan time))
+            {
+                DateTime today = DateTime.Today;
+                DateTime searchTime = today.Date.Add(time);
+
+                var filter = Builders<SensorData>.Filter.Where(x => x.Timestamp.Hour == searchTime.Hour &&
+                                                                    x.Timestamp.Minute == searchTime.Minute &&
+                                                                    x.Timestamp.Second == searchTime.Second);
+
+                return _sensorDataCollection.Find(filter).ToList();
+            }
+            else
+            {
+                return new List<SensorData>();
+            }
+        }
+        
+        public List<SensorData> GetSensorsDataByDate(DateTime timestamp)
+        {
+            DateTime startOfDay = timestamp.Date;
+            DateTime endOfDay = startOfDay.AddDays(1).AddTicks(-1);
+
+            var filter = Builders<SensorData>.Filter.Gte(x => x.Timestamp, startOfDay) &
+                         Builders<SensorData>.Filter.Lt(x => x.Timestamp, endOfDay);
+
+            return _sensorDataCollection.Find(filter).ToList();
+        }
+
+        public List<SensorData> GetSensorsDataBySensorType(string sensorType)
+        {
+            var filter = Builders<SensorData>.Filter.Eq(x => x.SensorType, sensorType);
+            return _sensorDataCollection.Find(filter).ToList();
+        }
+
+        public List<SensorData> GetSensorDataByIdAndTime(int sensorId, DateTime timestamp)
+        {
+            var filter = Builders<SensorData>.Filter.And(
+                Builders<SensorData>.Filter.Eq(x => x.SensorId, sensorId),
+                Builders<SensorData>.Filter.Eq(x => x.Timestamp, timestamp)
+            );
+            return _sensorDataCollection.Find(filter).ToList();
+        }
+
+        public List<SensorData> GetSensorDataByTypeAndTime(string sensorType, DateTime timestamp)
+        {
+            var filter = Builders<SensorData>.Filter.And(
+                Builders<SensorData>.Filter.Eq(x => x.SensorType, sensorType),
+                Builders<SensorData>.Filter.Eq(x => x.Timestamp, timestamp)
+            );
+            return _sensorDataCollection.Find(filter).ToList();
+        }
     }
-}
