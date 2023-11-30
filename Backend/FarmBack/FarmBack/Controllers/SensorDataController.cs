@@ -9,12 +9,9 @@ namespace FarmBack.Controllers;
 public class SensorDataController : ControllerBase
 {
     private readonly ISensorDataRepository _repository;
-    //private readonly SensorDataRepository _repository;
 
     public SensorDataController(ISensorDataRepository repository)
-    //public SensorDataController()
     {
-        //_repository = new SensorDataRepository("mongodb://localhost:27017", "windfarm", "windfarm");
         this._repository = repository;
     }
 
