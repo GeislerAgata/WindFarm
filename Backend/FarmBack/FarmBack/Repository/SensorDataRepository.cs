@@ -1,5 +1,6 @@
 using FarmBack.DTO;
 using MongoDB.Driver;
+using System.Collections.Generic;
 
 namespace FarmBack.Services;
     public class SensorDataRepository : ISensorDataRepository
@@ -62,12 +63,66 @@ namespace FarmBack.Services;
         {
             _sensorDataCollection.InsertOne(sensorData);
         }
+
         public List<SensorData> GetSensorsData()
         {
             var filter = Builders<SensorData>.Filter.Exists(x => x.SensorId);
             return _sensorDataCollection.Find(filter).ToList();
         }
-        
+
+        public List<SensorData> GetSensorsData(string filters, string sortBy, string order)
+        {
+            
+            var filterBy = System.Text.Json.JsonSerializer.Deserialize<Filters>(filters);
+
+            //var data = new List<SensorData>();
+
+            var filter = Builders<SensorData>.Filter.Empty;
+            SortDefinition<SensorData> sort = null;
+
+            if (!string.IsNullOrEmpty(filterBy?.SensorId))
+            {
+                var sensorIdFilter = Builders<SensorData>.Filter.Eq(x => x.SensorId, int.Parse(filterBy.SensorId));
+                filter = Builders<SensorData>.Filter.And(filter, sensorIdFilter);
+            }
+            if (!string.IsNullOrEmpty(filterBy?.SensorType))
+            {
+                var sensorTypeFilter = Builders<SensorData>.Filter.Eq(x => x.SensorType, filterBy.SensorType);
+                filter = Builders<SensorData>.Filter.And(filter, sensorTypeFilter);
+            }
+            if (!string.IsNullOrEmpty(filterBy?.Timestamp))
+            {
+                DateTime startOfDay = DateTime.Parse(filterBy.Timestamp);
+                DateTime endOfDay = startOfDay.AddDays(1).AddTicks(-1);
+
+                var timestampFilter = Builders<SensorData>.Filter.Gte(x => x.Timestamp, startOfDay) &
+                             Builders<SensorData>.Filter.Lt(x => x.Timestamp, endOfDay);
+                filter = Builders<SensorData>.Filter.And(filter, timestampFilter);
+            }
+
+            if (sortBy != "") {
+                if (order == "asc")
+                {
+                    sort = Builders<SensorData>.Sort.Ascending(sortBy);
+                }
+                else if (order == "desc")
+                {
+                    sort = Builders<SensorData>.Sort.Descending(sortBy);
+                }
+
+            }
+
+            if (sort != null)
+            {
+                var sortedData = _sensorDataCollection.Find(filter)
+                    .Sort(sort)
+                    .ToList();
+
+                return sortedData;
+            }
+            return _sensorDataCollection.Find(filter).ToList();
+        }
+
         public List<SensorData> GetSensorData(int sensorId)
         {
             var filter = Builders<SensorData>.Filter.Eq(x => x.SensorId, sensorId);

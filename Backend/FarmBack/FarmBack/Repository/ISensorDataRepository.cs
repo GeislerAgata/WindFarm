@@ -6,7 +6,10 @@ public interface ISensorDataRepository
 {
     List<SensorData> GetSensorsData();
     List<SensorData> GetSensorData(int sensorId);
-    
+
+    List<SensorData> GetSensorsData(string filters, string sortBy, string order);
+
+
     List<SensorData> GetSensorsDataBySensorType(string sensorType);
     List<SensorData> GetSensorsDataByTimestamp(DateTime timestamp);
     List<SensorData> GetSensorsDataByHour(string timeString);

@@ -17,9 +17,12 @@ public class SensorDataController : ControllerBase
 
     // GET /SensorData
     [HttpGet]
-    public List<SensorData> GetSensorsData()
+    public List<SensorData> GetSensorsData(
+        [FromQuery] string? filters = "{}",
+        [FromQuery] string? sortBy = "",
+        [FromQuery] string? order = "asc")
     {
-        return _repository.GetSensorsData();
+        return _repository.GetSensorsData(filters, sortBy, order);
     }
 
     // GET /SensorData/id/{sensorId}
