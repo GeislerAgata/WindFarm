@@ -1,1 +1,17 @@
-<p>dashboard works!</p>
+<h1 class="text-center py-3">Dashboard <mat-icon>dashboard</mat-icon></h1>
+<mat-tab-group>
+  <mat-tab label="Charts">
+    <wind-chart></wind-chart>
+    <app-vibrations-chart></app-vibrations-chart>
+  </mat-tab>
+  <mat-tab label="Average values">
+    <div class="py-3">
+      <div *ngFor="let sensorId of sensorIds">
+        <app-avg-sensor [sensorId]="sensorId"></app-avg-sensor>
+      </div>
+    </div>
+  </mat-tab>
+
+</mat-tab-group>
+
+

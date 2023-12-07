@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-
+  sensorIds = Array.from({ length: 16 }, (_, index) => index + 1)
 }

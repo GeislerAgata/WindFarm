@@ -1,14 +1,18 @@
-<div class="container">
-  <div class="text-center">
-    <h1>Welcome to Sensor App!</h1>
-  </div>
-</div>
 <div>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <ul class="navbar-nav">
-      <li class="nav-item"><a class="nav-link" routerLink="/dashboard">Dashboard</a></li>
-      <li class="nav-item"><a class="nav-link" routerLink="/table">Table</a></li>
-    </ul>
+    <div class="p-3">
+      <h3 style="margin-bottom: 0px;">Wind Farm</h3>
+    </div>
+    <div class="text-end">
+      <ul class="navbar-nav">
+        <li class="nav-item px-3"><a class="menu-link" routerLink="/dashboard">Dashboard</a></li>
+        <li class="nav-item px-3"><a class="menu-link" routerLink="/table">Table</a></li>
+      </ul>
+    </div>
   </nav>
 </div>
-<router-outlet></router-outlet>
+<div class="container">
+  <div class="py-3">
+    <router-outlet></router-outlet>
+  </div>
+</div>

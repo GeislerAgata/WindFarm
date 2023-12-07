@@ -1,0 +1,18 @@
+<div class="table-responsive">
+  <table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+    <tr>
+      <th>Sensor ID</th>
+      <th>Average Last 100 Value</th>
+      <th>Last value</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td>{{ sensorId }}</td>
+      <td>{{ sensorStats.avg }}</td>
+      <td style="max-width: 150px">{{ sensorStats.lastValue }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
