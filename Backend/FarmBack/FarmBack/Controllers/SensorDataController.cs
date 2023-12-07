@@ -20,9 +20,11 @@ public class SensorDataController : ControllerBase
     public List<SensorData> GetSensorsData(
         [FromQuery] string? filters = "{}",
         [FromQuery] string? sortBy = "",
-        [FromQuery] string? order = "asc")
+        [FromQuery] string? order = "asc",
+        [FromQuery] int limit = 0
+        )
     {
-        return _repository.GetSensorsData(filters, sortBy, order);
+        return _repository.GetSensorsData(filters, sortBy, order, limit);
     }
 
     // GET /SensorData/id/{sensorId}
@@ -35,6 +37,13 @@ public class SensorDataController : ControllerBase
             return NotFound();
         }
         return data;
+    }
+    
+    // GET /SensorData/{sensorId}/avg
+    [HttpGet("/api/SensorData/{sensorId}/avg")]
+    public ActionResult<SensorStats> GetSensorAverageData(int sensorId)
+    {
+        return _repository.GetSensorStats(sensorId);
     }
     
     // GET /SensorData/time/{timestamp}

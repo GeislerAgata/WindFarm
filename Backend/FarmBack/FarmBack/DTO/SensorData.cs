@@ -21,4 +21,13 @@ namespace FarmBack.DTO
         [JsonProperty("unit")]
         public string Unit { get; set; }
     }
+    
+    public class SensorStats
+    {
+        [JsonProperty("avg")]
+        public double Avg { get; set; }
+
+        [JsonProperty("last_value")]
+        public double LastValue { get; set; }
+    }
 }
