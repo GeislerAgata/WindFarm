@@ -1,4 +1,5 @@
-﻿using FarmBack.DTO;
+﻿using System.Text;
+using FarmBack.DTO;
 using FarmBack.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,14 +18,41 @@ public class SensorDataController : ControllerBase
 
     // GET /SensorData
     [HttpGet]
-    public List<SensorData> GetSensorsData(
+    public IActionResult GetSensorsData(
         [FromQuery] string? filters = "{}",
         [FromQuery] string? sortBy = "",
         [FromQuery] string? order = "asc",
-        [FromQuery] int limit = 0
+        [FromQuery] int limit = 0,
+        [FromQuery] string? format = "json" // Domyślnie ustawiony na json
         )
     {
-        return _repository.GetSensorsData(filters, sortBy, order, limit);
+        var data = _repository.GetSensorsData(filters, sortBy, order, limit);
+        
+        if (data == null || data.Count == 0)
+        {
+            return NotFound();
+        }
+        
+        if (format.ToLower() == "csv") // Sprawdzenie czy format jest ustawiony na csv
+        {
+            var csvData = ConvertToCSV(data);
+            var bytes = Encoding.UTF8.GetBytes(csvData);
+            return File(bytes, "text/csv", "sensor_data.csv");
+        }
+        
+        return Ok(data);
+    }
+    
+    // Metoda pomocnicza do konwersji do formatu CSV
+    private string ConvertToCSV(List<SensorData> data)
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine("Timestamp,SensorId,SensorType,Value,Unit");
+        foreach (var item in data)
+        {
+            sb.AppendLine($"{item.Timestamp},{item.SensorId},{item.SensorType},{item.Value},{item.Unit}");
+        }
+        return sb.ToString();
     }
 
     // GET /SensorData/id/{sensorId}
