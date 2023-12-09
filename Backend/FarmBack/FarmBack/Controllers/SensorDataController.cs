@@ -23,7 +23,7 @@ public class SensorDataController : ControllerBase
         [FromQuery] string? sortBy = "",
         [FromQuery] string? order = "asc",
         [FromQuery] int limit = 0,
-        [FromQuery] string? format = "json" // Domyślnie ustawiony na json
+        [FromQuery] string? format = "json"
         )
     {
         var data = _repository.GetSensorsData(filters, sortBy, order, limit);
@@ -33,7 +33,7 @@ public class SensorDataController : ControllerBase
             return NotFound();
         }
         
-        if (format.ToLower() == "csv") // Sprawdzenie czy format jest ustawiony na csv
+        if (format.ToLower() == "csv")
         {
             var csvData = ConvertToCSV(data);
             var bytes = Encoding.UTF8.GetBytes(csvData);
@@ -43,7 +43,6 @@ public class SensorDataController : ControllerBase
         return Ok(data);
     }
     
-    // Metoda pomocnicza do konwersji do formatu CSV
     private string ConvertToCSV(List<SensorData> data)
     {
         var sb = new StringBuilder();
