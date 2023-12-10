@@ -23,7 +23,7 @@ public class SensorDataController : ControllerBase
         [FromQuery] string? sortBy = "",
         [FromQuery] string? order = "asc",
         [FromQuery] int limit = 0,
-        [FromQuery] string? format = "json"
+        [FromQuery] string? format = ""
         )
     {
         var data = _repository.GetSensorsData(filters, sortBy, order, limit);
@@ -39,7 +39,14 @@ public class SensorDataController : ControllerBase
             var bytes = Encoding.UTF8.GetBytes(csvData);
             return File(bytes, "text/csv", "sensor_data.csv");
         }
-        
+
+        if (format.ToLower() == "json")
+        {
+            var jsonData = Newtonsoft.Json.JsonConvert.SerializeObject(data, Newtonsoft.Json.Formatting.Indented);
+            var bytes = Encoding.UTF8.GetBytes(jsonData);
+            return File(bytes, "application/json", "sensor_data.json");
+        }
+
         return Ok(data);
     }
     
@@ -49,7 +56,8 @@ public class SensorDataController : ControllerBase
         sb.AppendLine("Timestamp,SensorId,SensorType,Value,Unit");
         foreach (var item in data)
         {
-            sb.AppendLine($"{item.Timestamp},{item.SensorId},{item.SensorType},{item.Value},{item.Unit}");
+            string dateString = item.Timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+            sb.AppendLine($"{dateString},{item.SensorId},{item.SensorType},{item.Value},{item.Unit}");
         }
         return sb.ToString();
     }
