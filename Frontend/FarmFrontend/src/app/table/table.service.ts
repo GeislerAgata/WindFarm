@@ -17,6 +17,14 @@ export class TableService {
     getSensors(filters: string = "{}", sortBy: string = "", order: string = ""): void {
         const url = `${this.baseUrl}?filters=${filters}&sortBy=${sortBy}&order=${order}`
         this.http.get<Sensor[]>(url)
-        .subscribe(val => this.dataSubject.next(val));
+        .subscribe({ 
+            next: val => this.dataSubject.next(val),
+            error: () => this.dataSubject.next([])
+        });
+    }
+
+    getSensorsFile(filters: string = "{}", sortBy: string = "", order: string = "", format: string = "json"): Observable<Blob> {
+        const url = `${this.baseUrl}?filters=${filters}&sortBy=${sortBy}&order=${order}&format=${format}`
+        return this.http.get(url, { responseType: 'blob' });
     }
 }
