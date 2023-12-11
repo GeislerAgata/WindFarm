@@ -1,0 +1,61 @@
+﻿version: '3.0'
+  
+volumes:
+  mongodb:
+
+services:
+  mqtt:
+    image: rabbitmq:latest
+    container_name: mqtt
+    build:
+      context: ./MQTT
+      dockerfile: Dockerfile
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+     
+  mongodb:
+    image: mongo:latest
+    container_name: db-mongodb
+    build:
+      context: ./Database
+      dockerfile: Dockerfile
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root
+      MONGO_INITDB_DATABASE: windfarm
+    volumes:
+      - mongodb:/data/db
+      - ./Database/init.js:/docker-entrypoint-initdb.d/init.js:ro  
+  
+  backend:
+    image: net-api:latest
+    container_name: backend-container
+    build:
+      context: ./Backend/FarmBack
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+      - "7137:7137"
+      - "7136:7136"
+    depends_on:
+      - mqtt
+      - mongodb
+    
+  frontend:
+    image: sens-frontend:latest
+    container_name: frontend-container
+    build:
+      context: ./Frontend/FarmFrontend
+      dockerfile: Dockerfile
+    ports:
+      - "4200:4200"
+    environment:
+      - PORT=8080
+    depends_on:
+      - backend
