@@ -13,6 +13,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_HOST: mqtt
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -26,8 +27,6 @@ services:
     ports:
       - '27017:27017'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
       MONGO_INITDB_DATABASE: windfarm
     volumes:
       - mongodb:/data/db
@@ -40,9 +39,7 @@ services:
       context: ./Backend/FarmBack
       dockerfile: Dockerfile
     ports:
-      - "5000:80"
-      - "7137:7137"
-      - "7136:7136"
+      - "7082:80"
     depends_on:
       - mqtt
       - mongodb
