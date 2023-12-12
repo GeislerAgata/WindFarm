@@ -13,6 +13,7 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
+      RABBITMQ_HOST: mqtt
     ports:
       - "5672:5672"
       - "15672:15672"
@@ -27,8 +28,6 @@ services:
     ports:
       - '27017:27017'
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: root
       MONGO_INITDB_DATABASE: windfarm
     volumes:
       - mongodb:/data/db
@@ -45,7 +44,6 @@ services:
       - CORS=http://frontend:4200
     ports:
       - "7082:80"
-      - "5122:5122"
     depends_on:
       - mqtt
       - mongodb
