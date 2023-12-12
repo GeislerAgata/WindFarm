@@ -17,13 +17,13 @@ namespace FarmBack.Services
         {
             var factory = new ConnectionFactory
             {
-                HostName = "localhost",
-                Port = 5672,
+                HostName = "mqtt",
+                Port = 1883,
                 UserName = "guest",
                 Password = "guest"
             };
             
-            _sensorDataRepository = new SensorDataRepository("mongodb://localhost:27017", "windfarm", "windfarm");
+            _sensorDataRepository = new SensorDataRepository("mongodb:root:root//mongodb:27017", "windfarm", "windfarm");
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();

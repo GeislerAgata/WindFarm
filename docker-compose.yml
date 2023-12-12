@@ -16,6 +16,7 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+      - "1883:1883"
      
   mongodb:
     image: mongo:latest
@@ -39,10 +40,12 @@ services:
     build:
       context: ./Backend/FarmBack
       dockerfile: Dockerfile
+    environment:
+      - ConnectionStrings__MongoDB=mongodb://root:root@mongodb:27017
+      - CORS=http://frontend:4200
     ports:
-      - "5000:80"
-      - "7137:7137"
-      - "7136:7136"
+      - "7082:80"
+      - "5122:5122"
     depends_on:
       - mqtt
       - mongodb
@@ -55,7 +58,5 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4200:4200"
-    environment:
-      - PORT=8080
     depends_on:
       - backend
