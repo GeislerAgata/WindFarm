@@ -23,7 +23,7 @@ namespace FarmBack.Services
                 Password = "guest"
             };
             
-            _sensorDataRepository = new SensorDataRepository("mongodb:root:root//mongodb:27017", "windfarm", "windfarm");
+            _sensorDataRepository = new SensorDataRepository("mongodb://mongodb:27017", "windfarm", "windfarm");
 
             _connection = factory.CreateConnection();
             _channel = _connection.CreateModel();

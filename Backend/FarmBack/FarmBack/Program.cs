@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
-var repository = new SensorDataRepository("mongodb:root:root//mongodb:27017", "windfarm", "windfarm");
+var repository = new SensorDataRepository("mongodb://mongodb:27017", "windfarm", "windfarm");
 
 builder.Services.AddSingleton<ISensorDataRepository>(provider => repository);
 builder.Services.AddControllers();
