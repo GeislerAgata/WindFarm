@@ -15,11 +15,11 @@ export class SensorService {
   }
 
   public getSensorAverageData(sensorId: number): Observable<SensorStats> {
-    return this.http.get<SensorStats>('https://localhost:7082/api/SensorData/' + sensorId + '/avg')
+    return this.http.get<SensorStats>('https://backend-container:7082/api/SensorData/' + sensorId + '/avg')
   }
 
   public getSensorsData(filters: string = "{}", sortBy: string = "", order: string = ""): Observable<Sensor[]> {
-    const url = `https://localhost:7082/api/SensorData/?filters=${filters}&sortBy=desc&order=${order}&limit=10`
+    const url = `https://backend-container:7082/api/SensorData/?filters=${filters}&sortBy=desc&order=${order}&limit=10`
     return this.http.get<Sensor[]>(url)
   }
 }

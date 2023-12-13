@@ -18,7 +18,7 @@ services:
       - "5672:5672"
       - "15672:15672"
       - "1883:1883"
-     
+
   mongodb:
     image: mongo:latest
     container_name: db-mongodb
@@ -43,7 +43,8 @@ services:
       - ConnectionStrings__MongoDB=mongodb://root:root@mongodb:27017
       - CORS=http://frontend:4200
     ports:
-      - "7082:80"
+      - "7082:7082"
+      - "5122:80"
     depends_on:
       - mqtt
       - mongodb
@@ -56,5 +57,6 @@ services:
       dockerfile: Dockerfile
     ports:
       - "4200:4200"
+      - "8080:80"
     depends_on:
       - backend

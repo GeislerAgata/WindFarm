@@ -18,7 +18,7 @@ namespace FarmBack.Services
             var factory = new ConnectionFactory
             {
                 HostName = "mqtt",
-                Port = 1883,
+                Port = 5672,
                 UserName = "guest",
                 Password = "guest"
             };

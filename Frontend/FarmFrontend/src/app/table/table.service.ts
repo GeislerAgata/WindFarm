@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from "rxjs";
     providedIn: 'root',
 })
 export class TableService {
-    private baseUrl = 'https://localhost:7082/api/SensorData';
+    private baseUrl = 'https://backend-container:7082/api/SensorData';
 
     private dataSubject = new BehaviorSubject<Sensor[]>([]);
     data$ = this.dataSubject.asObservable();
